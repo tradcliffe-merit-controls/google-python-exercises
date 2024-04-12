@@ -45,6 +45,36 @@ import sys
 # and builds and returns a word/count dict for it.
 # Then print_words() and print_top() can just call the utility function.
 
+def print_words(filename): 
+  finished_map = create_map(filename)
+  for i in sorted(finished_map.keys()):
+    print(i, finished_map[i])
+  return finished_map
+
+def print_top(filename):
+  count = 0
+  finished_map = create_map(filename)
+  new_tople = sorted(finished_map.items(), key=lambda x: x[1], reverse=True)
+  for i in new_tople:
+    count = count + 1
+    if count > 20: break
+    print(i[0], i[1] )
+  return
+
+def create_map(filename):
+  words_and_counts_map = { }
+  f = open(filename, 'r')
+  f_string = f.read().split()
+  f.close()
+  for x in f_string:
+    if x in words_and_counts_map: 
+      words_and_counts_map[x] = words_and_counts_map[x] + 1
+    else:
+      words_and_counts_map[x] = 1
+
+
+  return words_and_counts_map
+
 ###
 
 # This basic command line argument parsing code is provided and
