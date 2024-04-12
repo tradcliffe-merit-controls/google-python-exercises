@@ -21,8 +21,11 @@
 # and last chars of the string are the same.
 # Note: python does not have a ++ operator, but += works.
 def match_ends(words):
-  # +++your code here+++
-  return
+  count = 0
+  for x in words:
+    if len(x) > 1 and x[0] == x[-1]:
+      count = count + 1
+  return count
 
 
 # B. front_x
@@ -33,8 +36,14 @@ def match_ends(words):
 # Hint: this can be done by making 2 lists and sorting each of them
 # before combining them.
 def front_x(words):
-  # +++your code here+++
-  return
+  xList = []
+  noXList = []
+  for x in words: 
+    if(x[0] == 'x'): 
+      xList.append(x)
+    else: 
+      noXList.append(x)
+  return sorted(xList) + sorted(noXList)
 
 
 
@@ -45,8 +54,9 @@ def front_x(words):
 # [(2, 2), (1, 3), (3, 4, 5), (1, 7)]
 # Hint: use a custom key= function to extract the last element form each tuple.
 def sort_last(tuples):
-  # +++your code here+++
-  return
+  def last_value_tuple(t):
+    return t[-1]
+  return sorted(tuples, key=last_value_tuple)
 
 
 # Simple provided test() function used in main() to print
