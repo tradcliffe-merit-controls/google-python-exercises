@@ -17,8 +17,39 @@ import subprocess
 
 # +++your code here+++
 # Write functions and modify main() to call them
+def get_special_files(dir):
+  ptrn_matches = []
+  filenames = os.listdir(dir)
+  for file in filenames:
+    match = re.search(r'\w*__\w*__\.\w*', file)
+    if match:
+        abs_path = os.path.abspath(os.path.join(dir, file))
+        ptrn_matches.append(abs_path)
+  return ptrn_matches
 
+def cpy_special_files(dir, files):
+  here = os.path.abspath('./')
+  print(here)
+  if not os.path.exists(dir):
+    os.mkdir(dir)
+  for f in files:
+      shutil.copy(f, dir)
 
+def zip_special_files(new_name, files):
+#   absolute path does not work on wsl. SO this won't work here but it is the solution. FOr wsl need to have the ~/code instead of the home/tradcliffe/code
+# in real coding situations I would try and check if I was in wsl
+
+  if len(files) == 0:
+    print('No files found')
+    sys.exit(1)
+
+  cmd = 'zip -j ' + new_name + ' ' + ' '.join(files)
+  print('Doing something, hoping for the best: ' + cmd)
+  (status, output) = subprocess.getstatusoutput(cmd)
+  if status:
+    print('error?')
+    sys.stderr.write(output)
+    sys.exit(1)
 
 def main():
   # This basic command line argument parsing code is provided.
@@ -50,6 +81,20 @@ def main():
 
   # +++your code here+++
   # Call your functions
+  fetch_files = get_special_files(args[0])
+  if todir:
+    print('todir')
+    cpy_special_files(todir, fetch_files)
+  elif tozip:
+    print('tozip')
+    zip_special_files(tozip, fetch_files)
+  else: 
+    if len(fetch_files) > 0: 
+      for file in fetch_files:
+        print(file)
+    else:
+      print('No special files')
+      
 
 if __name__ == '__main__':
   main()
