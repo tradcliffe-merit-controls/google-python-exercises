@@ -1,12 +1,60 @@
-on: workflow_dispatch 
-permissions:
-  contents: read
-  issues: write 
-jobs:
-  stuff:
+name: Create action
+on: 
+  workflow_dispatch:
+    inputs:
+      title: 
+        description: title of the issue
+        required: true
+        type: string
+      assignees: 
+        description: asignee of the issue
+        required: true
+        type: string
+      labels: 
+        description: labels of 
+        required: true
+        type: string
+      body: 
+        description: body of the issue
+        required: true
+        type: string
+    
+
+jobs: 
+  create_issue:
+    name: Create issue from Jira
     runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v3
-      - uses: JasonEtco/create-an-issue@v2
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+    permissions:
+      issues: write
+    steps: 
+      - name: create issue
+        run: |
+          new_issue_url=$(gh issue create \
+              --title "$TITLE" \
+              --assignee "$ASSIGNEES" \
+              --label "$LABELS" \
+              --body "$BODY")
+    env: 
+      GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      GH_REPO: ${{ github.repository }}
+      TITLE: ${{ inputs.title }}
+      ASSIGNEES: ${{ inputs.assignees }}
+      LABELS: ${{ inputs.labels }}
+      BODY: ${{ inputs.body }}
+      
+
+      
+      
+
+# Uses older methodd
+# permissions:
+#   contents: read
+#   issues: write 
+# jobs:
+#   stuff:
+#     runs-on: ubuntu-latest
+#     steps:
+#       - uses: actions/checkout@v3
+#       - uses: JasonEtco/create-an-issue@v2
+#         env:
+#           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
