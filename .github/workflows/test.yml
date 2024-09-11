@@ -16,10 +16,15 @@
 
 name: testing jira inputs from issue
 
-on: workflow_dispatch
+on: 
+  workflow_dispatch:
+    inputs:
+      changelog: 
+        description: changelog
+        type: string
 jobs:
   debugInputs:
     runs-on: ubuntu-latest
     steps:
     - run: |
-        echo "Var1: ${{ github.event.inputs}}"
+        echo "Var1: ${{ changelog }}"
