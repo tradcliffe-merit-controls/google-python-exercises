@@ -29,3 +29,4 @@ jobs:
     steps:
     - run: |
         echo "Var1: ${{ changelog }}"
+        echo "Var2: ${{ github.event.inputs}}"
