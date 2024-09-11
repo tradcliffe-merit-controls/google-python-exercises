@@ -27,8 +27,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
     - run: |
-        echo "Var1: ${{ changelog }}"
-        echo "Var2: ${{ github.event.inputs}}"
+        echo "Var1: $changelog"
 
 
 env:
