@@ -22,6 +22,7 @@ on:
       changelog: 
         description: changelog
         type: string
+        required: false
 jobs:
   debugInputs:
     runs-on: ubuntu-latest
